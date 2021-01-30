@@ -8,6 +8,7 @@ import com.hotelautomation.domain.Corridor;
 import com.hotelautomation.domain.CorridorType;
 import com.hotelautomation.domain.Floor;
 import com.hotelautomation.domain.request.MotionDetectionInput;
+import com.hotelautomation.exception.HotelAutomationException;
 import com.hotelautomation.service.ElectricityManagementService;
 
 import java.util.List;
@@ -17,15 +18,19 @@ public class ElectricityManagerServiceImpl implements ElectricityManagementServi
 
     IFloorBuilder builder = FloorBuilderImpl.getInstance();
 
-    public void processMotionDetection(MotionDetectionInput input) {
-        Floor floor = builder.getFloor(input.getFloorNumber());
-        int currentConsumption = builder.calculateCurrentConsumption(floor);
-        if(input.getMotionDetected()) {
-            processTurnedOnMotion(input, floor, currentConsumption);
-        } else {
-            processTurnedOffMotion(input, floor);
-        }
+    public void processMotionDetection(MotionDetectionInput input) throws HotelAutomationException {
+        try {
 
+            Floor floor = builder.getFloor(input.getFloorNumber());
+            int currentConsumption = builder.calculateCurrentConsumption(floor);
+            if (input.getMotionDetected()) {
+                processTurnedOnMotion(input, floor, currentConsumption);
+            } else {
+                processTurnedOffMotion(input, floor);
+            }
+        }catch (Exception e){
+            throw new HotelAutomationException("Error while processing motion detection data");
+        }
 
     }
 
