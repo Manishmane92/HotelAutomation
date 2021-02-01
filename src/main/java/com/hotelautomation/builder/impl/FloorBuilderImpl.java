@@ -41,8 +41,13 @@ public class FloorBuilderImpl implements IFloorBuilder {
 
     public void buildFloor(List<FloorDetails> details) throws HotelAutomationException {
         floorList = new ArrayList<Floor>();
+        List<Integer> floorNumbers = new ArrayList<>();
         for (FloorDetails detail:details) {
             //build floor one by one :
+            if(floorNumbers.contains(detail.getFloorNumber())){
+                throw new HotelAutomationException("Duplicate data for floor : " + detail.getFloorNumber());
+            }
+            floorNumbers.add(detail.getFloorNumber());
             Floor floor = new Floor();
             List<Corridor> mainCorridors = buildMainCorridors(detail);
             List<Corridor> subCorridors = buildSubCorridors(detail);

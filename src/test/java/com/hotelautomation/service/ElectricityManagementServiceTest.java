@@ -8,6 +8,7 @@ import com.hotelautomation.service.impl.ElectricityManagerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -22,13 +23,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ElectricityManagementServiceTest {
 
+    @InjectMocks
+    ElectricityManagerServiceImpl service;
     @Mock
     FloorBuilderImpl floorBuilder;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        floorBuilder = Mockito.mock(FloorBuilderImpl.class);
     }
 
     private Floor getFloorData() {
@@ -73,7 +75,7 @@ public class ElectricityManagementServiceTest {
 
     @Test
     public void shouldProcessMotionDetectionWithoutException() throws HotelAutomationException {
-        ElectricityManagementService service = new ElectricityManagerServiceImpl();
+
         when(floorBuilder.getFloor(1)).thenReturn(getFloorData());
         MotionDetectionInput input = new MotionDetectionInput();
         input.setMotionDetected(true);
@@ -86,7 +88,6 @@ public class ElectricityManagementServiceTest {
 
     @Test(expected = HotelAutomationException.class)
     public void shouldThrowHotelAutomationExceptionOnInvalidInputWhileProcessMotionDetection() throws HotelAutomationException {
-        ElectricityManagementService service = new ElectricityManagerServiceImpl();
         MotionDetectionInput input = new MotionDetectionInput();
         input.setMotionDetected(true);
         input.setType(CorridorType.SUB);

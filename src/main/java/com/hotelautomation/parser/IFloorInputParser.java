@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IFloorInputParser {
 
-    List<FloorDetails> parseFloorData(List<String> lines) throws HotelAutomationException;
+    List<FloorDetails> parseFloorData(List<String> lines,Integer totalFloorNumber) throws HotelAutomationException;
 
 }
