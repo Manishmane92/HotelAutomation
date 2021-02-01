@@ -23,7 +23,7 @@ public class FloorInputParserTest {
         Integer numberOfMainsCorridors = 2, numberOfSubCorridors = 2, floorNumber = 1;
         List<FloorDetails> floorDetails = parser.parseFloorData(new ArrayList<String>() {{
             add(floorNumber +"," + numberOfMainsCorridors +"," + numberOfSubCorridors);
-        }});
+        }},1);
 
         assertEquals(1, floorDetails.size());
         assertEquals(numberOfMainsCorridors, floorDetails.get(0).getNumberOfMainCorridors());
@@ -36,6 +36,6 @@ public class FloorInputParserTest {
         IFloorInputParser parser = new FloorInputParserImpl();
         List<FloorDetails> floorDetails = parser.parseFloorData(new ArrayList<String>() {{
             add("abc,2,2");
-        }});
+        }},1);
     }
 }
